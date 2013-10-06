@@ -17,6 +17,7 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *   
  */
+
 package net.alexanderschroeder.bukkitutil;
 
 import java.io.FileInputStream;
@@ -113,7 +114,12 @@ public class SLAPI {
 	 *             if an I/O error occurs during serialization
 	 */
 	public static void saveToFile(final Object object, final String path) throws FileNotFoundException, IOException {
-		saveToStream(object, new FileOutputStream(path));
+		final FileOutputStream stream = new FileOutputStream(path);
+		try {
+			saveToStream(object, stream);
+		} finally {
+			stream.close();
+		}
 	}
 
 	/**
@@ -136,6 +142,11 @@ public class SLAPI {
 	 *             if an I/O error occurs during serialization
 	 */
 	public static Object loadFromFile(final String path) throws FileNotFoundException, IOException {
-		return loadFromStream(new FileInputStream(path));
+		final FileInputStream stream = new FileInputStream(path);
+		try {
+			return loadFromStream(stream);
+		} finally {
+			stream.close();
+		}
 	}
 }

@@ -16,6 +16,7 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *   
  */
+
 package net.alexanderschroeder.bukkitutil;
 
 import java.io.BufferedReader;
@@ -290,7 +291,7 @@ public abstract class Database {
 		return input;
 	}
 
-	private String validateCreateDDLSqlite(final String oldScript) {
+	private static String validateCreateDDLSqlite(final String oldScript) {
 		try {
 			// Create a BufferedReader out of the potentially invalid script
 			final BufferedReader scriptReader = new BufferedReader(new StringReader(oldScript));
@@ -416,7 +417,9 @@ public abstract class Database {
 	 * @return List List of classes which should be registered with the
 	 *         EbeanServer
 	 */
+	@SuppressWarnings("static-method")
 	protected List<Class<?>> getDatabaseClasses() {
+		// Intended to be overridden by plug-ins
 		return new ArrayList<Class<?>>();
 	}
 
@@ -424,12 +427,14 @@ public abstract class Database {
 	 * Method called before the loaded database is being dropped
 	 */
 	protected void beforeDropDatabase() {
+		// Intended to be overridden by interested plug-ins
 	}
 
 	/**
 	 * Method called after the loaded database has been created
 	 */
 	protected void afterCreateDatabase() {
+		// Intended to be overridden by interested plug-ins
 	}
 
 	/**
@@ -440,6 +445,7 @@ public abstract class Database {
 	 * @param serverConfig
 	 */
 	protected void prepareDatabaseAdditionalConfig(final DataSourceConfig dataSourceConfig, final ServerConfig serverConfig) {
+		// Intended to be overridden by interested plug-ins
 	}
 
 	/**
